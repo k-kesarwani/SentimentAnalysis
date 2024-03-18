@@ -1,42 +1,56 @@
-# Emotion Recognition Model
+# Sentiment Analysis with GRU Model
 
-This repository contains code for building and evaluating an emotion recognition model using TensorFlow. The model is trained on a dataset from Kaggle containing text samples labeled with different emotions.
+This project aims to predict the emotion conveyed in a given text using a GRU (Gated Recurrent Unit) neural network model. The model is trained on a dataset containing text samples labeled with different emotions.
 
 ## Dataset
-The dataset used for training, validation, and testing is located in the directory `kaggle/input/emotion-dataset-for-nlp/`. It consists of three files:
-- `train.txt`: Training data
-- `val.txt`: Validation data
-- `test.txt`: Testing data
-
-The data is loaded into Pandas DataFrames and preprocessed before training the model.
+The dataset used for training, validation, and testing is the "Emotion Dataset for NLP." It consists of labeled text samples categorized into various emotions. The dataset is divided into training, validation, and test sets.
 
 ## Preprocessing
-Text data preprocessing involves the following steps:
-1. Removing specified emotions from the dataset.
-2. Tokenization and lemmatization using spaCy.
-3. Encoding labels using sklearn's LabelEncoder.
+Text preprocessing involves cleaning the text data and tokenizing it using spaCy. Stop words, punctuation, and whitespace are removed from the text, and lemmatization is applied to obtain the base form of words. Emotions such as 'love' and 'surprise' are removed from the dataset during preprocessing.
 
 ## Model Architecture
-The model architecture consists of the following layers:
-1. TextVectorization layer for tokenizing text.
-2. Embedding layer for word embeddings.
-3. Two GRU (Gated Recurrent Unit) layers for sequence processing.
-4. Dense output layer with softmax activation for multi-class classification.
+The GRU model architecture consists of:
+- Text vectorization layer
+- Embedding layer
+- Two GRU layers with dropout
+- Dense output layer with softmax activation
+
+The model is compiled with the Adam optimizer and sparse categorical cross-entropy loss function.
 
 ## Training
-The model is trained using TensorFlow's `Sequential` API. Training is conducted with a specified batch size and number of epochs.
+The model is trained using batches of text samples. Training is performed over multiple epochs, with validation performed on a separate validation set to monitor the model's performance.
 
 ## Evaluation
-The model is evaluated on both the validation and test sets using accuracy as the metric. Additionally, the model is saved for future use.
+The trained model is evaluated on the test set to assess its accuracy in predicting emotions from unseen text samples.
 
 ## Making Predictions
-To make predictions on a single sentence, the following steps are performed:
-1. Preprocess the sentence to remove extra tokens.
-2. Expand the dimension to match the model's input shape.
-3. Pass the preprocessed sentence through the model for prediction.
+To make predictions on new text samples, the following steps are followed:
+1. Preprocess the text to remove unnecessary tokens.
+2. Expand the dimensions of the preprocessed text.
+3. Pass the preprocessed text through the trained model to obtain predictions.
+
+## Demo Interface
+A graphical interface (GUI) using Gradio is provided for making predictions on custom text inputs. Users can input text, and the model predicts the corresponding emotion conveyed in the text.
+
+## File Structure
+- **`SentimentAnalysis.ipynb`**: Jupyter Notebook containing the code for model training, evaluation, and prediction.
+- **`gru_model.keras`**: Saved trained model file.
+- **`README.md`**: This readme file providing an overview of the project.
+
+## Requirements
+- Python 3.x
+- TensorFlow
+- spaCy
+- scikit-learn
+- matplotlib
+- wordcloud
+- Gradio
 
 ## Usage
-To train the model and evaluate its performance, run the provided Python script. You can also load the saved model to make predictions on new data.
-
-```python
-python emotion_recognition_model.py
+1. Clone the repository.
+2. Install the required dependencies using:  
+```python3
+pip install requirements.txt
+```
+3. Run the Jupyter Notebook `SentimentAnalysis.ipynb` to train the model and generate predictions.
+4. Explore the provided graphical interface for making predictions on custom text inputs.
