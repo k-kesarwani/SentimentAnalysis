@@ -1,6 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.preprocessing import LabelEncoder
+import spacy
+
+with open('SentimentAnalysis/class_names.txt', 'r') as f:
+    labels = [emotion.strip() for emotion in f.readlines()] 
+    
+encoder= LabelEncoder()
+encoder.fit(labels)
+
+nlp = spacy.load("en_core_web_sm")
+
 
 def plot_pie_chart(data_frame: pd.DataFrame, title: str) -> None:
     """
@@ -21,15 +32,23 @@ def plot_pie_chart(data_frame: pd.DataFrame, title: str) -> None:
     plt.show()
     plt.close()
 
-def drop_readings(dataframe: pd.DataFrame, emotion: str) -> pd.DataFrame:
+def preprocess_text(df: pd.DataFrame, emotions: list=['love', 'surprise']):
     """
-    Drops readings with a specified emotion from the provided DataFrame.
+    Preprocesses text data in a DataFrame.
 
     Args:
-        dataframe (pd.DataFrame): The DataFrame containing the data.
-        emotion (str): The emotion to drop readings for.
+        df (pd.DataFrame): DataFrame containing 'sentence' and 'label' columns.
+        encoder (LabelEncoder): Label encoder for the labels.
+        emotions (list): List of emotions to drop from the DataFrame.
 
     Returns:
-        pd.DataFrame: The DataFrame with readings corresponding to the specified emotion dropped.
+        pd.DataFrame: DataFrame with preprocessed text and encoded labels.
     """
-    dataframe.drop(dataframe[dataframe['label'] == emotion].index, inplace=True)
+    for i in emotions:
+        df = df[df['label'] != i]
+
+    df['processed_text'] = df['text'].apply(lambda x: ' '.join([token.lemma_ for token in nlp(x) if not token.is_stop and not token.is_punct and not token.is_space]))
+
+    df['label_num'] = encoder.transform(df['label'])
+    df.drop(columns=['text', 'label'], inplace=True)
+    return df
