@@ -4,7 +4,7 @@ import seaborn as sns
 from sklearn.preprocessing import LabelEncoder
 import spacy
 
-with open('SentimentAnalysis/class_names.txt', 'r') as f:
+with open('kaggle/label_names.txt', 'r') as f:
     labels = [emotion.strip() for emotion in f.readlines()] 
     
 encoder= LabelEncoder()
@@ -43,7 +43,7 @@ def preprocess_text(df: pd.DataFrame, emotions: list=['love', 'surprise']):
 
     Returns:
         pd.DataFrame: DataFrame with preprocessed text and encoded labels.
-    """
+    # """
     for i in emotions:
         df = df[df['label'] != i]
 
@@ -52,3 +52,44 @@ def preprocess_text(df: pd.DataFrame, emotions: list=['love', 'surprise']):
     df['label_num'] = encoder.transform(df['label'])
     df.drop(columns=['text', 'label'], inplace=True)
     return df
+
+def preprocess_single_sentence(sentence):
+    """
+    Preprocesses a single sentence.
+
+    Args:
+        sentence (str): Input sentence.
+
+    Returns:
+        str: Preprocessed and tokenized sentence.
+    """
+    processed_text = ' '.join([token.lemma_ for token in nlp(sentence) if not token.is_stop and not token.is_punct and not token.is_space])
+    return processed_text
+
+def plot_training_history(history):
+    """
+    Plots the training and validation accuracy and loss curves.
+
+    Parameters:
+    history (History object): History object returned by model.fit() containing training metrics.
+
+    Returns:
+    None
+    """
+    # Plot training & validation accuracy values
+    plt.plot(history.history['accuracy'])
+    plt.plot(history.history['val_accuracy'])
+    plt.title('Model accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper left')
+    plt.show()
+
+    # Plot training & validation loss values
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('Model loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper left')
+    plt.show()

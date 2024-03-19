@@ -1,0 +1,4 @@
+anger
+fear
+joy
+sadness
