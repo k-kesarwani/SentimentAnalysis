@@ -5,8 +5,8 @@ from sklearn.preprocessing import LabelEncoder
 import spacy
 
 with open('kaggle/label_names.txt', 'r') as f:
-    labels = [emotion.strip() for emotion in f.readlines()] 
-    
+    labels = [emotion.strip() for emotion in f.readlines()]
+
 encoder= LabelEncoder()
 encoder.fit(labels)
 
@@ -37,8 +37,7 @@ def preprocess_text(df: pd.DataFrame, emotions: list=['love', 'surprise']):
     Preprocesses text data in a DataFrame.
 
     Args:
-        df (pd.DataFrame): DataFrame containing 'sentence' and 'label' columns.
-        encoder (LabelEncoder): Label encoder for the labels.
+        df (pd.DataFrame): DataFrame containing 'text' and 'label' columns.
         emotions (list): List of emotions to drop from the DataFrame.
 
     Returns:
