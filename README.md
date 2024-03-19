@@ -3,7 +3,7 @@
 This project aims to predict the emotion conveyed in a given text using a GRU (Gated Recurrent Unit) neural network model. The model is trained on a dataset containing text samples labeled with different emotions.
 
 ## Dataset
-The dataset used for training, validation, and testing is the "Emotion Dataset for NLP." It consists of labeled text samples categorized into various emotions. The dataset is divided into training, validation, and test sets.
+The dataset used for training, validation, and testing is the ["Emotion Dataset for NLP."](https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp) It consists of labeled text samples categorized into various emotions. The dataset is divided into training, validation, and test sets.
 
 ## Preprocessing
 Text preprocessing involves cleaning the text data and tokenizing it using spaCy. Stop words, punctuation, and whitespace are removed from the text, and lemmatization is applied to obtain the base form of words. Emotions such as 'love' and 'surprise' are removed from the dataset during preprocessing.
@@ -35,6 +35,7 @@ A graphical interface (GUI) using Gradio is provided for making predictions on c
 ## File Structure
 - **`SentimentAnalysis.ipynb`**: Jupyter Notebook containing the code for model training, evaluation, and prediction.
 - **`gru_model.keras`**: Saved trained model file.
+- **`helper_functions.py`**: Python script containing helper functions for data preprocessing and evaluation.
 - **`README.md`**: This readme file providing an overview of the project.
 
 ## Requirements
@@ -43,14 +44,13 @@ A graphical interface (GUI) using Gradio is provided for making predictions on c
 - spaCy
 - scikit-learn
 - matplotlib
+- seaborn
 - wordcloud
 - Gradio
 
 ## Usage
 1. Clone the repository.
 2. Install the required dependencies using:  
-```python3
+```python
 pip install requirements.txt
 ```
-3. Run the Jupyter Notebook `SentimentAnalysis.ipynb` to train the model and generate predictions.
-4. Explore the provided graphical interface for making predictions on custom text inputs.
