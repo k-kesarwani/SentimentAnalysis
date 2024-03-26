@@ -1,0 +1,3 @@
+Text,Predicted_Labels,Prediction_Time
+"tf.Tensor([b'example text prediction'], shape=(1,), dtype=string)","{'anger': 0.7913910746574402, 'fear': 0.043947555124759674, 'joy': 0.10996323078870773, 'sadness': 0.05469810217618942}",0.03723
+"tf.Tensor([b'example text prediction'], shape=(1,), dtype=string)","{'anger': 0.7913910746574402, 'fear': 0.043947555124759674, 'joy': 0.10996323078870773, 'sadness': 0.05469810217618942}",0.03528
